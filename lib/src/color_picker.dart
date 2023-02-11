@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'color_utils.dart';
 
 class ColorPicker extends StatelessWidget {
-  const ColorPicker({super.key});
+  final ValueChanged<Color>? onChange;
+
+  const ColorPicker({super.key, this.onChange});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +22,10 @@ class ColorPicker extends StatelessWidget {
           RegExp(r'[0-9a-fA-F]'),
         ),
       ],
+      onChanged: (value) {
+        if (value.length != 6) return;
+        onChange?.call(ColorUtils.fromHex(value));
+      },
     );
   }
 }

@@ -18,7 +18,9 @@ class App extends StatelessWidget {
         body: Center(
           child: Padding(
             padding: EdgeInsets.all(24),
-            child: ColorPicker(),
+            child: ColorPicker(
+              onChange: print,
+            ),
           ),
         ),
       ),
