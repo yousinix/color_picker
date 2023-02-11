@@ -1,3 +1,4 @@
+import 'package:color_picker/src/hex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'color_utils.dart';
@@ -11,6 +12,7 @@ enum ColorSpace {
 
 class ColorPicker extends StatefulWidget {
   final Color initialColor;
+  final int initialAlpha;
   final ColorSpace initialColorSpace;
   final ValueChanged<Color>? onChange;
 
@@ -18,32 +20,42 @@ class ColorPicker extends StatefulWidget {
     super.key,
     required this.initialColor,
     this.initialColorSpace = ColorSpace.hex,
+    this.initialAlpha = 100,
     this.onChange,
-  });
+  }) : assert(initialAlpha >= 0 && initialAlpha <= 100);
 
   @override
   State<ColorPicker> createState() => _ColorPickerState();
 }
 
 class _ColorPickerState extends State<ColorPicker> {
+  /// Current [ColorSpace].
   late ColorSpace space;
-  late Color color;
+
+  /// Current alpha percentage.
   late int alpha;
+
+  /// Current [Color] with full alpha.
+  late Color rawColor;
+
+  /// A derived [Color] from [rawColor] and the current [alpha] value.
+  Color get alphaColor => rawColor.withAlphaPercent(alpha);
 
   @override
   void initState() {
     super.initState();
     space = widget.initialColorSpace;
-    color = widget.initialColor;
-    alpha = 100;
+    alpha = widget.initialAlpha;
+    rawColor = widget.initialColor;
   }
 
-  void onValuesChange(Color hexColor, int alphaPercent) {
-    final newAlpha = (alphaPercent / 100 * 255).round();
-    final newColor = hexColor.withAlpha(newAlpha);
+  void onValuesChange(Color newColor, int newAlpha) {
+    setState(() {
+      alpha = newAlpha;
+      rawColor = newColor;
+    });
 
-    widget.onChange?.call(newColor);
-    setState(() => color = newColor);
+    widget.onChange?.call(alphaColor);
   }
 
   @override
@@ -54,7 +66,7 @@ class _ColorPickerState extends State<ColorPicker> {
         Container(
           height: 24,
           width: 24,
-          color: color,
+          color: alphaColor,
         ),
         const SizedBox.square(
           dimension: 8,
@@ -80,25 +92,9 @@ class _ColorPickerState extends State<ColorPicker> {
         ),
         Flexible(
           flex: 3,
-          child: TextFormField(
-            maxLength: 6,
-            initialValue: widget.initialColor.toHex(
-              leadingHashSign: false,
-            ),
-            decoration: const InputDecoration(
-              prefixText: '#',
-              counterText: '',
-            ),
-            inputFormatters: [
-              // TODO: allow all inputs and fallback to current value if invalid
-              FilteringTextInputFormatter.allow(
-                RegExp(r'[0-9a-fA-F]'),
-              ),
-            ],
-            onChanged: (value) {
-              if (value.length != 6) return;
-              onValuesChange(ColorUtils.fromHex(value), alpha);
-            },
+          child: HexColorPicker(
+            initialColor: widget.initialColor,
+            onChanged: (value) => onValuesChange(value, alpha),
           ),
         ),
         const SizedBox.square(
@@ -121,7 +117,7 @@ class _ColorPickerState extends State<ColorPicker> {
             ],
             onChanged: (value) {
               if (value.isEmpty) return;
-              onValuesChange(color, int.parse(value));
+              onValuesChange(rawColor, int.parse(value));
             },
           ),
         ),

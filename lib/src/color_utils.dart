@@ -6,6 +6,11 @@ extension ColorUtils on Color {
     return Color(intValue);
   }
 
+  Color withAlphaPercent(int alphaPercent) {
+    final alpha = (alphaPercent / 100 * 255).round();
+    return withAlpha(alpha);
+  }
+
   /// Prefixes a hash sign if [leadingHashSign] is set to `true` (default is `true`).
   String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
       '${red.toRadixString(16).padLeft(2, '0')}'
