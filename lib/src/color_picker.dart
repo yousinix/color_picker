@@ -3,10 +3,14 @@ import 'package:flutter/services.dart';
 import 'color_utils.dart';
 
 class ColorPicker extends StatefulWidget {
-  static const initialColor = Color(0xFF00FF00);
+  final Color initialColor;
   final ValueChanged<Color>? onChange;
 
-  const ColorPicker({super.key, this.onChange});
+  const ColorPicker({
+    super.key,
+    required this.initialColor,
+    this.onChange,
+  });
 
   @override
   State<ColorPicker> createState() => _ColorPickerState();
@@ -18,7 +22,7 @@ class _ColorPickerState extends State<ColorPicker> {
   @override
   void initState() {
     super.initState();
-    color = ColorPicker.initialColor;
+    color = widget.initialColor;
   }
 
   @override
@@ -30,7 +34,6 @@ class _ColorPickerState extends State<ColorPicker> {
           height: 24,
           width: 24,
           color: color,
-
         ),
         const SizedBox.square(
           dimension: 8,
@@ -38,7 +41,7 @@ class _ColorPickerState extends State<ColorPicker> {
         Expanded(
           child: TextFormField(
             maxLength: 6,
-            initialValue: ColorPicker.initialColor.toHex(
+            initialValue: widget.initialColor.toHex(
               leadingHashSign: false,
             ),
             decoration: const InputDecoration(

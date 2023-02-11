@@ -19,6 +19,7 @@ class App extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.all(24),
             child: ColorPicker(
+              initialColor: Color(0xFF00FF00),
               onChange: print,
             ),
           ),
