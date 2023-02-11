@@ -1,6 +1,6 @@
 import 'package:color_picker/src/hex_color_picker.dart';
+import 'package:color_picker/src/percentage_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'color_utils.dart';
 
 enum ColorSpace {
@@ -102,23 +102,9 @@ class _ColorPickerState extends State<ColorPicker> {
         ),
         Flexible(
           flex: 1,
-          child: TextFormField(
-            textAlign: TextAlign.end,
-            keyboardType: TextInputType.number,
-            maxLength: 3,
-            initialValue: '100',
-            decoration: const InputDecoration(
-              suffixText: '%',
-              counterText: '',
-            ),
-            inputFormatters: [
-              // TODO: allow all inputs and fallback to current value if invalid
-              FilteringTextInputFormatter.digitsOnly,
-            ],
-            onChanged: (value) {
-              if (value.isEmpty) return;
-              onValuesChange(rawColor, int.parse(value));
-            },
+          child: PercentagePicker(
+            initialValue: widget.initialAlpha,
+            onChanged: (value) => onValuesChange(rawColor, value),
           ),
         ),
       ],
