@@ -1,10 +1,12 @@
 import 'package:color_picker/src/hex_color_picker.dart';
 import 'package:color_picker/src/percentage_picker.dart';
+import 'package:color_picker/src/rgb_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'color_utils.dart';
 
 enum ColorSpace {
-  hex('HEX');
+  hex('HEX'),
+  rgb('RGB');
 
   const ColorSpace(this.name);
   final String name;
@@ -74,7 +76,7 @@ class _ColorPickerState extends State<ColorPicker> {
         Flexible(
           flex: 1,
           child: DropdownButton(
-            value: widget.initialColorSpace,
+            value: space,
             items: ColorSpace.values
                 .map((x) => DropdownMenuItem(
                       value: x,
@@ -92,10 +94,16 @@ class _ColorPickerState extends State<ColorPicker> {
         ),
         Flexible(
           flex: 3,
-          child: HexColorPicker(
-            initialColor: widget.initialColor,
-            onChanged: (value) => onValuesChange(value, alpha),
-          ),
+          child: {
+            ColorSpace.hex: HexColorPicker(
+              initialColor: rawColor,
+              onChanged: (value) => onValuesChange(value, alpha),
+            ),
+            ColorSpace.rgb: RgbColorPicker(
+              initialColor: rawColor,
+              onChanged: (value) => onValuesChange(value, alpha),
+            )
+          }[space]!,
         ),
         const SizedBox.square(
           dimension: 8,
