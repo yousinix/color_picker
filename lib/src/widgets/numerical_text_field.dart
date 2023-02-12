@@ -7,11 +7,17 @@ class NumericalTextField extends StatelessWidget {
     super.key,
     required this.max,
     required this.initialValue,
+    this.hint,
+    this.suffix,
     this.onChanged,
   }) : assert(initialValue >= 0 && initialValue <= max);
 
   final int max;
   final int initialValue;
+
+  final String? hint;
+  final String? suffix;
+
   final ValueChanged<int>? onChanged;
 
   @override
@@ -19,6 +25,10 @@ class NumericalTextField extends StatelessWidget {
     return TextFormField(
       initialValue: '$initialValue',
       keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        hintText: hint,
+        suffixText: suffix,
+      ),
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
         MaxNumberTextInputFormatter(max),

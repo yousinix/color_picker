@@ -54,6 +54,7 @@ class _HslColorPickerState extends State<HslColorPicker> {
       children: [
         Expanded(
           child: NumericalTextField(
+            hint: 'H',
             max: 360,
             initialValue: hue,
             onChanged: (value) {
@@ -66,6 +67,7 @@ class _HslColorPickerState extends State<HslColorPicker> {
         ),
         Expanded(
           child: NumericalTextField(
+            hint: 'S',
             max: 100,
             initialValue: saturation,
             onChanged: (value) {
@@ -78,6 +80,7 @@ class _HslColorPickerState extends State<HslColorPicker> {
         ),
         Expanded(
           child: NumericalTextField(
+            hint: 'L',
             max: 100,
             initialValue: lightness,
             onChanged: (value) {

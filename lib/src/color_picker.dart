@@ -110,8 +110,10 @@ class _ColorPickerState extends State<ColorPicker> {
           dimension: 16,
         ),
         SizedBox(
-          width: 40,
+          width: 48,
           child: NumericalTextField(
+            hint: 'A',
+            suffix: '%',
             max: 100,
             initialValue: widget.initialAlpha,
             onChanged: (value) => onValuesChange(rawColor, value),

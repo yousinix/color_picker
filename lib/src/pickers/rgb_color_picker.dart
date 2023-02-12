@@ -47,6 +47,7 @@ class _RgbColorPickerState extends State<RgbColorPicker> {
       children: [
         Expanded(
           child: NumericalTextField(
+            hint: 'R',
             max: 255,
             initialValue: red,
             onChanged: (value) {
@@ -59,6 +60,7 @@ class _RgbColorPickerState extends State<RgbColorPicker> {
         ),
         Expanded(
           child: NumericalTextField(
+            hint: 'G',
             max: 255,
             initialValue: green,
             onChanged: (value) {
@@ -71,6 +73,7 @@ class _RgbColorPickerState extends State<RgbColorPicker> {
         ),
         Expanded(
           child: NumericalTextField(
+            hint: 'B',
             max: 255,
             initialValue: blue,
             onChanged: (value) {
