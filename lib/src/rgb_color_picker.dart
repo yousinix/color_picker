@@ -1,5 +1,5 @@
+import 'package:color_picker/src/numerical_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class RgbColorPicker extends StatefulWidget {
   final Color initialColor;
@@ -45,19 +45,12 @@ class _RgbColorPickerState extends State<RgbColorPicker> {
     return Row(
       children: [
         Expanded(
-          child: TextFormField(
-            maxLength: 3,
-            initialValue: '$red',
-            decoration: const InputDecoration(
-              counterText: '',
-            ),
-            inputFormatters: [
-              // TODO: allow all inputs and fallback to current value if invalid
-              FilteringTextInputFormatter.digitsOnly,
-            ],
+          child: NumericalTextField(
+            min: 0,
+            max: 255,
+            initialValue: red,
             onChanged: (value) {
-              if (value.isEmpty) return;
-              onValuesChanged(int.parse(value), green, blue);
+              onValuesChanged(value, green, blue);
             },
           ),
         ),
@@ -65,19 +58,12 @@ class _RgbColorPickerState extends State<RgbColorPicker> {
           dimension: 8,
         ),
         Expanded(
-          child: TextFormField(
-            maxLength: 3,
-            initialValue: '$green',
-            decoration: const InputDecoration(
-              counterText: '',
-            ),
-            inputFormatters: [
-              // TODO: allow all inputs and fallback to current value if invalid
-              FilteringTextInputFormatter.digitsOnly,
-            ],
+          child: NumericalTextField(
+            min: 0,
+            max: 255,
+            initialValue: green,
             onChanged: (value) {
-              if (value.isEmpty) return;
-              onValuesChanged(red, int.parse(value), blue);
+              onValuesChanged(red, value, blue);
             },
           ),
         ),
@@ -85,19 +71,12 @@ class _RgbColorPickerState extends State<RgbColorPicker> {
           dimension: 8,
         ),
         Expanded(
-          child: TextFormField(
-            maxLength: 3,
-            initialValue: '$blue',
-            decoration: const InputDecoration(
-              counterText: '',
-            ),
-            inputFormatters: [
-              // TODO: allow all inputs and fallback to current value if invalid
-              FilteringTextInputFormatter.digitsOnly,
-            ],
+          child: NumericalTextField(
+            min: 0,
+            max: 255,
+            initialValue: blue,
             onChanged: (value) {
-              if (value.isEmpty) return;
-              onValuesChanged(red, green, int.parse(value));
+              onValuesChanged(red, green, value);
             },
           ),
         ),

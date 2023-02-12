@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
+import 'numerical_text_field.dart';
 
 class HslColorPicker extends StatefulWidget {
   final Color initialColor;
@@ -52,19 +53,12 @@ class _HslColorPickerState extends State<HslColorPicker> {
     return Row(
       children: [
         Expanded(
-          child: TextFormField(
-            maxLength: 3,
-            initialValue: '$hue',
-            decoration: const InputDecoration(
-              counterText: '',
-            ),
-            inputFormatters: [
-              // TODO: allow all inputs and fallback to current value if invalid
-              FilteringTextInputFormatter.digitsOnly,
-            ],
+          child: NumericalTextField(
+            min: 0,
+            max: 360,
+            initialValue: hue,
             onChanged: (value) {
-              if (value.isEmpty) return;
-              onValuesChanged(int.parse(value), saturation, lightness);
+              onValuesChanged(value, saturation, lightness);
             },
           ),
         ),
@@ -72,19 +66,12 @@ class _HslColorPickerState extends State<HslColorPicker> {
           dimension: 8,
         ),
         Expanded(
-          child: TextFormField(
-            maxLength: 3,
-            initialValue: '$saturation',
-            decoration: const InputDecoration(
-              counterText: '',
-            ),
-            inputFormatters: [
-              // TODO: allow all inputs and fallback to current value if invalid
-              FilteringTextInputFormatter.digitsOnly,
-            ],
+          child: NumericalTextField(
+            min: 0,
+            max: 100,
+            initialValue: saturation,
             onChanged: (value) {
-              if (value.isEmpty) return;
-              onValuesChanged(hue, int.parse(value), lightness);
+              onValuesChanged(hue, value, lightness);
             },
           ),
         ),
@@ -92,19 +79,12 @@ class _HslColorPickerState extends State<HslColorPicker> {
           dimension: 8,
         ),
         Expanded(
-          child: TextFormField(
-            maxLength: 3,
-            initialValue: '$lightness',
-            decoration: const InputDecoration(
-              counterText: '',
-            ),
-            inputFormatters: [
-              // TODO: allow all inputs and fallback to current value if invalid
-              FilteringTextInputFormatter.digitsOnly,
-            ],
+          child: NumericalTextField(
+            min: 0,
+            max: 100,
+            initialValue: lightness,
             onChanged: (value) {
-              if (value.isEmpty) return;
-              onValuesChanged(hue, saturation, int.parse(value));
+              onValuesChanged(hue, saturation, value);
             },
           ),
         ),

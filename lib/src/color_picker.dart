@@ -1,6 +1,6 @@
 import 'package:color_picker/src/hex_color_picker.dart';
 import 'package:color_picker/src/hsl_color_picker.dart';
-import 'package:color_picker/src/percentage_picker.dart';
+import 'package:color_picker/src/numerical_text_field.dart';
 import 'package:color_picker/src/rgb_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'color_utils.dart';
@@ -116,7 +116,9 @@ class _ColorPickerState extends State<ColorPicker> {
         ),
         Flexible(
           flex: 1,
-          child: PercentagePicker(
+          child: NumericalTextField(
+            min: 0,
+            max: 100,
             initialValue: widget.initialAlpha,
             onChanged: (value) => onValuesChange(rawColor, value),
           ),
