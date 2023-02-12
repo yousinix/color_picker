@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'numerical_text_field.dart';
+import '../widgets/numerical_text_field.dart';
 
 class HslColorPicker extends StatefulWidget {
-  final Color initialColor;
-  final ValueChanged<Color>? onChanged;
-
   const HslColorPicker({
     super.key,
     required this.initialColor,
     this.onChanged,
   });
+
+  final Color initialColor;
+  final ValueChanged<Color>? onChanged;
 
   @override
   State<HslColorPicker> createState() => _HslColorPickerState();

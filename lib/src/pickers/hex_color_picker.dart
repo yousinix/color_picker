@@ -1,16 +1,17 @@
-import 'package:color_picker/src/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class HexColorPicker extends StatelessWidget {
-  final Color initialColor;
-  final ValueChanged<Color>? onChanged;
+import '../utils/color_utils.dart';
 
+class HexColorPicker extends StatelessWidget {
   const HexColorPicker({
     super.key,
     required this.initialColor,
     this.onChanged,
   });
+
+  final Color initialColor;
+  final ValueChanged<Color>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,6 @@ class HexColorPicker extends StatelessWidget {
         counterText: '',
       ),
       inputFormatters: [
-        // TODO: allow all inputs and fallback to current value if invalid
         FilteringTextInputFormatter.allow(
           RegExp(r'[0-9a-fA-F]'),
         ),

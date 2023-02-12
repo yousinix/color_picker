@@ -20,7 +20,7 @@ class App extends StatelessWidget {
             padding: EdgeInsets.all(24),
             child: ColorPicker(
               initialColor: Color(0xFF00FF00),
-              onChange: print,
+              onChanged: print,
             ),
           ),
         ),

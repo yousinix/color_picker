@@ -1,32 +1,25 @@
-import 'package:color_picker/src/hex_color_picker.dart';
-import 'package:color_picker/src/hsl_color_picker.dart';
-import 'package:color_picker/src/numerical_text_field.dart';
-import 'package:color_picker/src/rgb_color_picker.dart';
 import 'package:flutter/material.dart';
-import 'color_utils.dart';
 
-enum ColorSpace {
-  hex('HEX'),
-  rgb('RGB'),
-  hsl('HSL');
-
-  const ColorSpace(this.name);
-  final String name;
-}
+import 'pickers/hex_color_picker.dart';
+import 'pickers/hsl_color_picker.dart';
+import 'pickers/rgb_color_picker.dart';
+import 'utils/color_space.dart';
+import 'utils/color_utils.dart';
+import 'widgets/numerical_text_field.dart';
 
 class ColorPicker extends StatefulWidget {
-  final Color initialColor;
-  final int initialAlpha;
-  final ColorSpace initialColorSpace;
-  final ValueChanged<Color>? onChange;
-
   const ColorPicker({
     super.key,
     required this.initialColor,
     this.initialColorSpace = ColorSpace.hex,
     this.initialAlpha = 100,
-    this.onChange,
+    this.onChanged,
   }) : assert(initialAlpha >= 0 && initialAlpha <= 100);
+
+  final Color initialColor;
+  final int initialAlpha;
+  final ColorSpace initialColorSpace;
+  final ValueChanged<Color>? onChanged;
 
   @override
   State<ColorPicker> createState() => _ColorPickerState();
@@ -59,7 +52,7 @@ class _ColorPickerState extends State<ColorPicker> {
       rawColor = newColor;
     });
 
-    widget.onChange?.call(alphaColor);
+    widget.onChanged?.call(alphaColor);
   }
 
   @override

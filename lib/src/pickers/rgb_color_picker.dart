@@ -1,15 +1,16 @@
-import 'package:color_picker/src/numerical_text_field.dart';
 import 'package:flutter/material.dart';
 
-class RgbColorPicker extends StatefulWidget {
-  final Color initialColor;
-  final ValueChanged<Color>? onChanged;
+import '../widgets/numerical_text_field.dart';
 
+class RgbColorPicker extends StatefulWidget {
   const RgbColorPicker({
     super.key,
     required this.initialColor,
     this.onChanged,
   });
+
+  final Color initialColor;
+  final ValueChanged<Color>? onChanged;
 
   @override
   State<RgbColorPicker> createState() => _RgbColorPickerState();

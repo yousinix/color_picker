@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class NumericalTextField extends StatelessWidget {
-  final int min;
-  final int max;
-  final int initialValue;
-  final ValueChanged<int>? onChanged;
-
   const NumericalTextField({
     super.key,
     required this.min,
@@ -14,6 +9,11 @@ class NumericalTextField extends StatelessWidget {
     required this.initialValue,
     this.onChanged,
   }) : assert(initialValue >= min && initialValue <= max);
+
+  final int min;
+  final int max;
+  final int initialValue;
+  final ValueChanged<int>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +33,10 @@ class NumericalTextField extends StatelessWidget {
 }
 
 class NumericalRangeFormatter extends TextInputFormatter {
+  NumericalRangeFormatter(this.min, this.max);
+
   final int min;
   final int max;
-
-  NumericalRangeFormatter(this.min, this.max);
 
   @override
   TextEditingValue formatEditUpdate(
