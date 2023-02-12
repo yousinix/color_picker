@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// [TextField] that accepts numbers from 0 to [max]
 class NumericalTextField extends StatelessWidget {
   const NumericalTextField({
     super.key,
-    required this.min,
     required this.max,
     required this.initialValue,
     this.onChanged,
-  }) : assert(initialValue >= min && initialValue <= max);
+  }) : assert(initialValue >= 0 && initialValue <= max);
 
-  final int min;
   final int max;
   final int initialValue;
   final ValueChanged<int>? onChanged;
@@ -22,7 +21,7 @@ class NumericalTextField extends StatelessWidget {
       keyboardType: TextInputType.number,
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
-        NumericalRangeFormatter(min, max),
+        MaxNumberTextInputFormatter(max),
       ],
       onChanged: (value) {
         if (value.isEmpty) return;
@@ -32,10 +31,9 @@ class NumericalTextField extends StatelessWidget {
   }
 }
 
-class NumericalRangeFormatter extends TextInputFormatter {
-  NumericalRangeFormatter(this.min, this.max);
+class MaxNumberTextInputFormatter extends TextInputFormatter {
+  MaxNumberTextInputFormatter(this.max);
 
-  final int min;
   final int max;
 
   @override
@@ -43,16 +41,12 @@ class NumericalRangeFormatter extends TextInputFormatter {
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    if (newValue.text.isEmpty) {
+    final value = int.tryParse(newValue.text);
+
+    if (newValue.text.isEmpty || (value != null && value < max)) {
       return newValue;
-    } else if (int.parse(newValue.text) < min) {
-      return TextEditingValue(
-        text: min.toString(),
-      );
-    } else if (int.parse(newValue.text) > max) {
-      return oldValue;
     } else {
-      return newValue;
+      return oldValue;
     }
   }
 }
