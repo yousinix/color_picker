@@ -61,34 +61,36 @@ class _ColorPickerState extends State<ColorPicker> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          height: 24,
-          width: 24,
+          height: 32,
+          width: 32,
           color: alphaColor,
         ),
         const SizedBox.square(
           dimension: 8,
         ),
-        Flexible(
-          flex: 1,
-          child: DropdownButton(
-            value: space,
-            items: ColorSpace.values
-                .map((x) => DropdownMenuItem(
-                      value: x,
-                      child: Text(x.name),
-                    ))
-                .toList(),
-            onChanged: (value) {
-              if (value == null) return;
-              setState(() => space = value);
-            },
+        DropdownButtonHideUnderline(
+          child: ButtonTheme(
+            alignedDropdown: true,
+            child: DropdownButton(
+              value: space,
+              items: ColorSpace.values
+                  .map((x) => DropdownMenuItem(
+                        value: x,
+                        child: Text(x.name),
+                      ))
+                  .toList(),
+              onChanged: (value) {
+                if (value == null) return;
+                setState(() => space = value);
+              },
+            ),
           ),
         ),
         const SizedBox.square(
-          dimension: 8,
+          dimension: 16,
         ),
-        Flexible(
-          flex: 3,
+        SizedBox(
+          width: 120,
           child: {
             ColorSpace.hex: HexColorPicker(
               initialColor: rawColor,
@@ -101,14 +103,14 @@ class _ColorPickerState extends State<ColorPicker> {
             ColorSpace.hsl: HslColorPicker(
               initialColor: rawColor,
               onChanged: (value) => onValuesChange(value, alpha),
-            )
+            ),
           }[space]!,
         ),
         const SizedBox.square(
-          dimension: 8,
+          dimension: 16,
         ),
-        Flexible(
-          flex: 1,
+        SizedBox(
+          width: 40,
           child: NumericalTextField(
             min: 0,
             max: 100,
