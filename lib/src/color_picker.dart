@@ -1,4 +1,5 @@
 import 'package:color_picker/src/hex_color_picker.dart';
+import 'package:color_picker/src/hsl_color_picker.dart';
 import 'package:color_picker/src/percentage_picker.dart';
 import 'package:color_picker/src/rgb_color_picker.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,8 @@ import 'color_utils.dart';
 
 enum ColorSpace {
   hex('HEX'),
-  rgb('RGB');
+  rgb('RGB'),
+  hsl('HSL');
 
   const ColorSpace(this.name);
   final String name;
@@ -100,6 +102,10 @@ class _ColorPickerState extends State<ColorPicker> {
               onChanged: (value) => onValuesChange(value, alpha),
             ),
             ColorSpace.rgb: RgbColorPicker(
+              initialColor: rawColor,
+              onChanged: (value) => onValuesChange(value, alpha),
+            ),
+            ColorSpace.hsl: HslColorPicker(
               initialColor: rawColor,
               onChanged: (value) => onValuesChange(value, alpha),
             )
