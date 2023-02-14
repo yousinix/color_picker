@@ -28,7 +28,7 @@ extension TesterUtils on WidgetTester {
     final targetItem = find.descendant(
       of: dropdown,
       matching: find.text(itemLabel),
-    ).last;
+    );
     await fineTap(targetItem);
   }
 }
